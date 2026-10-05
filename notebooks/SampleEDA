@@ -72,8 +72,30 @@ for _, row in players_with_tot.iterrows():
             )
         ]
 
+# Check for invalid values
+print("\nInvalid values:")
+
+print("Negative minutes:", (df["mp"] < 0).sum())
+print("Usage below 0:", (df["usg_percent"] < 0).sum())
+print("Usage above 100:", (df["usg_percent"] > 100).sum())
+print("TS below 0:", (df["ts_percent"] < 0).sum())
+print("TS above 1:", (df["ts_percent"] > 1).sum())
+print("3P attempt rate below 0:", (df["x3p_ar"] < 0).sum())
+print("3P attempt rate above 1:", (df["x3p_ar"] > 1).sum())
+print("AST below 0:", (df["ast_percent"] < 0).sum())
+print("TRB below 0:", (df["trb_percent"] < 0).sum())
+
 # Only keep players with at least 500 minutes
+rows_before_minutes = len(df)
+
 df = df[df["mp"] >= 500]
+
+rows_after_minutes = len(df)
+
+print("\n500-minute filter:")
+print("Rows before:", rows_before_minutes)
+print("Rows after:", rows_after_minutes)
+print("Rows removed:", rows_before_minutes - rows_after_minutes)
 
 # Reset row numbers
 df = df.reset_index(drop=True)

@@ -83,7 +83,7 @@ print(
             "gmm_cluster",
             "gmm_probability"
         ]
-    ].sample(5)
+    ].head(5)
 )
 
 # -------------------------
@@ -155,3 +155,8 @@ print(
         ]
     ].head(5)
 )
+
+print("\nSample input rows:")
+print(df[["player", "season", "tm", "mp",
+          "usg_percent", "ts_percent", "x3p_ar",
+          "ast_percent", "trb_percent"]].head(3))
