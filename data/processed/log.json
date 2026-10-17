@@ -1,0 +1,15 @@
+{
+  "raw_rows": 31870,
+  "duplicates_removed": 0,
+  "rows_in_season_range": 6126,
+  "rows_dropped_missing": 45,
+  "combined_rows_found": 632,
+  "per_team_rows_dropped": 1292,
+  "removed_by_minutes_filter": 1567,
+  "final_rows": 3222,
+  "rows_per_split": {
+    "train": 2120,
+    "val": 742,
+    "test": 360
+  }
+}
