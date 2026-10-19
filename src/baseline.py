@@ -1,103 +1,165 @@
+
 import json
-import os
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.metrics import silhouette_score, davies_bouldin_score, adjusted_rand_score
-from pathlib import Path
+from sklearn.metrics import (
+    silhouette_score,
+    davies_bouldin_score,
+    adjusted_rand_score,
+)
 
+# File locations and settings
 ROOT = Path(__file__).resolve().parent.parent
 DATA_PATH = ROOT / "data" / "processed" / "cleaned_nba.csv"
 RESULTS = ROOT / "results"
-FEATURES = ["usg_percent", "ts_percent", "x3p_ar", "ast_percent", "trb_percent"]
-RANDOM_STATE = 0
-K_RANGE = range(2, 9)
 
+FEATURES = [
+    "usg_percent",
+    "ts_percent",
+    "x3p_ar",
+    "ast_percent",
+    "trb_percent",
+]
+SEED = 0
+K_VALUES = range(2, 9)
+
+# 1. Load the data and use the existing splits
 df = pd.read_csv(DATA_PATH)
+
 train = df[df["split"] == "train"]
 val = df[df["split"] == "val"]
 test = df[df["split"] == "test"]
 
-# scale features, fit scaler on train only
+# 2. Scale features using training data only
 scaler = StandardScaler()
 X_train = scaler.fit_transform(train[FEATURES])
 X_val = scaler.transform(val[FEATURES])
 X_test = scaler.transform(test[FEATURES])
 
-# try different k values on k-means, pick the best one using validation silhouette score
-k_selection = []
-best_k, best_score = None, -1
-for k in K_RANGE:
-    km = KMeans(n_clusters=k, random_state=RANDOM_STATE, n_init=10)
-    km.fit(X_train)
-    score = silhouette_score(X_val, km.predict(X_val))
-    k_selection.append({"k": k, "silhouette_val": round(score, 4)})
-    if score > best_score:
-        best_k, best_score = k, score
+# 3. Choose k using validation silhouette score
+k_scores = []
+best_k = None
+best_score = -1
 
-def score_row(name, k, val_labels, test_labels):
+for k in K_VALUES:
+    model = KMeans(n_clusters=k, random_state=SEED, n_init=10)
+    model.fit(X_train)
+
+    labels = model.predict(X_val)
+    score = silhouette_score(X_val, labels)
+
+    k_scores.append({
+        "k": k,
+        "silhouette_val": round(score, 4),
+    })
+
+    if score > best_score:
+        best_k = k
+        best_score = score
+
+# Calculate the evaluation metrics for a model
+def evaluate(name, k, val_labels, test_labels):
     return {
         "model": name,
         "k": k,
-        "silhouette_val": round(silhouette_score(X_val, val_labels), 4),
-        "silhouette_test": round(silhouette_score(X_test, test_labels), 4),
-        "davies_bouldin_test": round(davies_bouldin_score(X_test, test_labels), 4),
+        "silhouette_val": round(
+            silhouette_score(X_val, val_labels), 4
+        ),
+        "silhouette_test": round(
+            silhouette_score(X_test, test_labels), 4
+        ),
+        "davies_bouldin_test": round(
+            davies_bouldin_score(X_test, test_labels), 4
+        ),
     }
 
-# naive baseline: random cluster labels (same k as k-means)
-rng = np.random.RandomState(RANDOM_STATE)
-naive_val_labels = rng.randint(0, best_k, size=len(val))
-naive_test_labels = rng.randint(0, best_k, size=len(test))
-naive_row = score_row("Naive: random labels", best_k, naive_val_labels, naive_test_labels)
+# 4. Naive baseline: assign random cluster labels
+rng = np.random.RandomState(SEED)
+random_val = rng.randint(0, best_k, size=len(val))
+random_test = rng.randint(0, best_k, size=len(test))
 
-# reference baseline: use player position as the "cluster"
-pos_encoder = LabelEncoder()
-pos_encoder.fit(df["pos"])
-pos_val_labels = pos_encoder.transform(val["pos"])
-pos_test_labels = pos_encoder.transform(test["pos"])
-reference_row = score_row("Reference: position labels", len(pos_encoder.classes_), pos_val_labels, pos_test_labels)
+naive = evaluate(
+    "Naive: random labels", best_k, random_val, random_test
+)
 
-# course-level baseline: k-means with the chosen k
-kmeans = KMeans(n_clusters=best_k, random_state=RANDOM_STATE, n_init=10)
+# 5. Reference baseline: use traditional player positions
+encoder = LabelEncoder()
+encoder.fit(df["pos"])
+
+position_val = encoder.transform(val["pos"])
+position_test = encoder.transform(test["pos"])
+
+positions = evaluate(
+    "Reference: position labels",
+    len(encoder.classes_),
+    position_val,
+    position_test,
+)
+
+# 6. Course-level baseline: K-Means
+kmeans = KMeans(n_clusters=best_k, random_state=SEED, n_init=10)
 kmeans.fit(X_train)
-kmeans_val_labels = kmeans.predict(X_val)
-kmeans_test_labels = kmeans.predict(X_test)
-kmeans_row = score_row("Course-level baseline: k-means", best_k, kmeans_val_labels, kmeans_test_labels)
 
-# candidate: Gaussian mixture with the same k, for a fair comparison
-gmm = GaussianMixture(n_components=best_k, random_state=RANDOM_STATE)
+kmeans_val = kmeans.predict(X_val)
+kmeans_test = kmeans.predict(X_test)
+
+kmeans_result = evaluate(
+    "Course-level baseline: k-means",
+    best_k,
+    kmeans_val,
+    kmeans_test,
+)
+
+# 7. Candidate model: Gaussian Mixture Model
+gmm = GaussianMixture(n_components=best_k, random_state=SEED)
 gmm.fit(X_train)
-gmm_val_labels = gmm.predict(X_val)
-gmm_test_labels = gmm.predict(X_test)
-gmm_row = score_row("Candidate: Gaussian mixture", best_k, gmm_val_labels, gmm_test_labels)
 
-# how much do kmeans and gmm agree on the test set?
-ari = round(adjusted_rand_score(kmeans_test_labels, gmm_test_labels), 4)
+gmm_val = gmm.predict(X_val)
+gmm_test = gmm.predict(X_test)
 
-rows = [naive_row, reference_row, kmeans_row, gmm_row]
+gmm_result = evaluate(
+    "Candidate: Gaussian mixture",
+    best_k,
+    gmm_val,
+    gmm_test,
+)
 
-RESULTS.mkdir(exist_ok=True)
+# Compare the two models' test-set cluster assignments
+ari = round(adjusted_rand_score(kmeans_test, gmm_test), 4)
 
-# save results table
-with open(RESULTS / "baseline_table.md", "w") as f:
-    f.write("| model | k | silhouette_val | silhouette_test | davies_bouldin_test |\n")
-    f.write("|---|---|---|---|---|\n")
-    for r in rows:
-        f.write(f"| {r['model']} | {r['k']} | {r['silhouette_val']} | {r['silhouette_test']} | {r['davies_bouldin_test']} |\n")
+# 8. Save the results
+rows = [naive, positions, kmeans_result, gmm_result]
+RESULTS.mkdir(parents=True, exist_ok=True)
 
-pd.DataFrame(k_selection).to_csv(RESULTS / "k_selection.csv", index=False)
+with open(RESULTS / "baseline_table.md", "w") as file:
+    file.write("| model | k | silhouette_val | silhouette_test | davies_bouldin_test |\n")
+    file.write("|---|---|---|---|---|\n")
+
+    for row in rows:
+        file.write(
+            f"| {row['model']} | {row['k']} | "
+            f"{row['silhouette_val']} | {row['silhouette_test']} | "
+            f"{row['davies_bouldin_test']} |\n"
+        )
+
+pd.DataFrame(k_scores).to_csv(
+    RESULTS / "k_selection.csv", index=False
+)
 
 summary = {
     "best_k_from_validation": best_k,
-    "k_selection": k_selection,
+    "k_selection": k_scores,
     "baseline_results": rows,
     "ari_kmeans_vs_gmm_test": ari,
 }
-with open(RESULTS / "summary.json", "w") as f:
-    json.dump(summary, f, indent=2)
+
+with open(RESULTS / "summary.json", "w") as file:
+    json.dump(summary, file, indent=2)
 
 print(json.dumps(summary, indent=2))
-print("\nSaved results/baseline_table.md, results/k_selection.csv, results/summary.json")
+print("Results saved in the results folder.")
