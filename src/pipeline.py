@@ -2,12 +2,12 @@ import json
 import os
 
 import pandas as pd
+from pathlib import Path
 
-RAW_PATH="data/raw/nba_stats/Advanced.csv"
-
-OUT_PATH="data/processed/cleaned_nba.csv"
-
-LOG_PATH="data/processed/log.json"
+ROOT = Path(__file__).resolve().parent.parent
+RAW_PATH = ROOT / "data" / "raw" / "nba_stats" / "Advanced.csv"
+OUT_PATH = ROOT / "data" / "processed" / "cleaned_nba.csv"
+LOG_PATH = ROOT / "data" / "processed" / "log.json"
 
 FEATURES=["usg_percent","ts_percent","x3p_ar","ast_percent","trb_percent"]
 
