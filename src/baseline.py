@@ -7,8 +7,11 @@ from sklearn.cluster import KMeans
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.metrics import silhouette_score, davies_bouldin_score, adjusted_rand_score
+from pathlib import Path
 
-DATA_PATH = "NBA_ML/data/processed/cleaned_nba.csv"
+ROOT = Path(__file__).resolve().parent.parent
+DATA_PATH = ROOT / "data" / "processed" / "cleaned_nba.csv"
+RESULTS = ROOT / "results"
 FEATURES = ["usg_percent", "ts_percent", "x3p_ar", "ast_percent", "trb_percent"]
 RANDOM_STATE = 0
 K_RANGE = range(2, 9)
@@ -76,16 +79,16 @@ ari = round(adjusted_rand_score(kmeans_test_labels, gmm_test_labels), 4)
 
 rows = [naive_row, reference_row, kmeans_row, gmm_row]
 
-os.makedirs("results", exist_ok=True)
+RESULTS.mkdir(exist_ok=True)
 
 # save results table
-with open("results/baseline_table.md", "w") as f:
+with open(RESULTS / "baseline_table.md", "w") as f:
     f.write("| model | k | silhouette_val | silhouette_test | davies_bouldin_test |\n")
     f.write("|---|---|---|---|---|\n")
     for r in rows:
         f.write(f"| {r['model']} | {r['k']} | {r['silhouette_val']} | {r['silhouette_test']} | {r['davies_bouldin_test']} |\n")
 
-pd.DataFrame(k_selection).to_csv("results/k_selection.csv", index=False)
+pd.DataFrame(k_selection).to_csv(RESULTS / "k_selection.csv", index=False)
 
 summary = {
     "best_k_from_validation": best_k,
@@ -93,7 +96,7 @@ summary = {
     "baseline_results": rows,
     "ari_kmeans_vs_gmm_test": ari,
 }
-with open("results/summary.json", "w") as f:
+with open(RESULTS / "summary.json", "w") as f:
     json.dump(summary, f, indent=2)
 
 print(json.dumps(summary, indent=2))

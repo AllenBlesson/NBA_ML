@@ -1,0 +1,64 @@
+{
+  "best_k_from_validation": 2,
+  "k_selection": [
+    {
+      "k": 2,
+      "silhouette_val": 0.2991
+    },
+    {
+      "k": 3,
+      "silhouette_val": 0.289
+    },
+    {
+      "k": 4,
+      "silhouette_val": 0.2228
+    },
+    {
+      "k": 5,
+      "silhouette_val": 0.2059
+    },
+    {
+      "k": 6,
+      "silhouette_val": 0.1831
+    },
+    {
+      "k": 7,
+      "silhouette_val": 0.175
+    },
+    {
+      "k": 8,
+      "silhouette_val": 0.1787
+    }
+  ],
+  "baseline_results": [
+    {
+      "model": "Naive: random labels",
+      "k": 2,
+      "silhouette_val": 0.0014,
+      "silhouette_test": -0.0017,
+      "davies_bouldin_test": 22.3586
+    },
+    {
+      "model": "Reference: position labels",
+      "k": 15,
+      "silhouette_val": -0.226,
+      "silhouette_test": -0.3513,
+      "davies_bouldin_test": 3.4313
+    },
+    {
+      "model": "Course-level baseline: k-means",
+      "k": 2,
+      "silhouette_val": 0.2991,
+      "silhouette_test": 0.3018,
+      "davies_bouldin_test": 1.3604
+    },
+    {
+      "model": "Candidate: Gaussian mixture",
+      "k": 2,
+      "silhouette_val": 0.2949,
+      "silhouette_test": 0.3005,
+      "davies_bouldin_test": 1.2544
+    }
+  ],
+  "ari_kmeans_vs_gmm_test": 0.7998
+}
