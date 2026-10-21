@@ -2,7 +2,7 @@
 
 CSCI 3052U Machine Learning I group project.
 
-Team: Nooh Alavi, Alan Damy, Allen Blesson, Musa Zubair, Pasoon Akhunzada
+Team 27: Nooh Alavi, Alan Damy, Allen Blesson, Musa Zubair, Pasoon Akhunzada
 
 ## What this project does
 We group NBA player-seasons (2016-2024) into play-style types using k-means and Gaussian Mixture Models. Then, for a given star player, we look for player types that complement their style.
@@ -14,16 +14,22 @@ We group NBA player-seasons (2016-2024) into play-style types using k-means and 
 
 ## Folders
 - `data/`: raw and cleaned data
-- `notebooks/`: EDA and clustering code
+- `src/`: pipeline and baseline code
+- `results/`: baseline table and k selection results
+- `notebooks/`: EDA code from Milestone 2
 - `figures/`: plots used in the reports
 - `reports/`: milestone reports (PDF)
 
 
+
 ## How to run
 1. Install the packages: `pip install -r requirements.txt`
-2. Open a terminal in the folder that contains `NBA_ML`
-3. Run the EDA and cleaning code first (`notebooks/SampleEDA`). It creates `data/processed/cleaned_nba.csv` and the figures.
-4. Then run `notebooks/Sampleinput_output.py` for the sample k-means and GMM output.
+2. Download the dataset into `data/raw/nba_stats/`
+3. Run the data pipeline: `python src/pipeline.py` (writes `data/processed/cleaned_nba.csv` and `log.json`)
+4. Run the baselines: `python src/baseline.py` (writes the files in `results/`)
+
+## Releases
+- `v1.0-baseline`: Milestone 3 baseline reproduction
 
 ## Other files
 - `AI_USE.md`: How we used AI tools
