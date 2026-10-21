@@ -60,5 +60,9 @@
       "davies_bouldin_test": 1.2544
     }
   ],
-  "ari_kmeans_vs_gmm_test": 0.7998
+  "ari_kmeans_vs_gmm_test": 0.7998,
+  "mean_ari_across_seeds": {
+    "kmeans": 1.0,
+    "gmm": 0.6458
+  }
 }

@@ -1,6 +1,7 @@
 
 import json
 from pathlib import Path
+from itertools import combinations
 
 import numpy as np
 import pandas as pd
@@ -132,6 +133,24 @@ gmm_result = evaluate(
 # Compare the two models' test-set cluster assignments
 ari = round(adjusted_rand_score(kmeans_test, gmm_test), 4)
 
+# Stability 
+kmeans_runs = [
+    KMeans(n_clusters=best_k, random_state=seed, n_init=10).fit(X_train).predict(X_test)
+    for seed in range(10)
+]
+gmm_runs = [
+    GaussianMixture(n_components=best_k, random_state=seed).fit(X_train).predict(X_test)
+    for seed in range(10)
+]
+
+# Mean ARI over every pair of runs
+def mean_ari(runs):
+    scores = [adjusted_rand_score(first, second) for first, second in combinations(runs, 2)]
+    return round(float(np.mean(scores)), 4)
+
+stability = {"kmeans": mean_ari(kmeans_runs), "gmm": mean_ari(gmm_runs)}
+print("Mean ARI across 10 seeds:", stability)
+
 # 8. Save the results
 rows = [naive, positions, kmeans_result, gmm_result]
 RESULTS.mkdir(parents=True, exist_ok=True)
@@ -156,6 +175,7 @@ summary = {
     "k_selection": k_scores,
     "baseline_results": rows,
     "ari_kmeans_vs_gmm_test": ari,
+    "mean_ari_across_seeds": stability,
 }
 
 with open(RESULTS / "summary.json", "w") as file:
