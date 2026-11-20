@@ -1,0 +1,171 @@
+model,seed,change,silhouette
+K-means,0,All features,0.30179968131213936
+K-means,0,Added noise,0.29064663944218433
+K-means,1,All features,0.30179968131213936
+K-means,1,Added noise,0.29064663944218433
+K-means,2,All features,0.30179968131213936
+K-means,2,Added noise,0.29064663944218433
+K-means,3,All features,0.30179968131213936
+K-means,3,Added noise,0.29064663944218433
+K-means,4,All features,0.30179968131213936
+K-means,4,Added noise,0.29064663944218433
+K-means,5,All features,0.30179968131213936
+K-means,5,Added noise,0.29064663944218433
+K-means,6,All features,0.30179968131213936
+K-means,6,Added noise,0.29064663944218433
+K-means,7,All features,0.30179968131213936
+K-means,7,Added noise,0.29064663944218433
+K-means,8,All features,0.30179968131213936
+K-means,8,Added noise,0.29064663944218433
+K-means,9,All features,0.30179968131213936
+K-means,9,Added noise,0.29064663944218433
+K-means,0,Without usg_percent,0.30179968131213936
+K-means,1,Without usg_percent,0.30179968131213936
+K-means,2,Without usg_percent,0.30179968131213936
+K-means,3,Without usg_percent,0.30179968131213936
+K-means,4,Without usg_percent,0.30179968131213936
+K-means,5,Without usg_percent,0.30179968131213936
+K-means,6,Without usg_percent,0.30179968131213936
+K-means,7,Without usg_percent,0.30179968131213936
+K-means,8,Without usg_percent,0.30179968131213936
+K-means,9,Without usg_percent,0.30179968131213936
+K-means,0,Without ts_percent,0.30605508689668337
+K-means,1,Without ts_percent,0.30605508689668337
+K-means,2,Without ts_percent,0.30605508689668337
+K-means,3,Without ts_percent,0.30605508689668337
+K-means,4,Without ts_percent,0.30605508689668337
+K-means,5,Without ts_percent,0.30605508689668337
+K-means,6,Without ts_percent,0.30605508689668337
+K-means,7,Without ts_percent,0.30605508689668337
+K-means,8,Without ts_percent,0.30605508689668337
+K-means,9,Without ts_percent,0.30605508689668337
+K-means,0,Without x3p_ar,0.23417979717011778
+K-means,1,Without x3p_ar,0.2337764048148681
+K-means,2,Without x3p_ar,0.23417979717011778
+K-means,3,Without x3p_ar,0.23511877971405604
+K-means,4,Without x3p_ar,0.2337764048148681
+K-means,5,Without x3p_ar,0.23511877971405604
+K-means,6,Without x3p_ar,0.2337764048148681
+K-means,7,Without x3p_ar,0.2337764048148681
+K-means,8,Without x3p_ar,0.2337764048148681
+K-means,9,Without x3p_ar,0.2337764048148681
+K-means,0,Without ast_percent,0.29870484440761785
+K-means,1,Without ast_percent,0.29870484440761785
+K-means,2,Without ast_percent,0.29870484440761785
+K-means,3,Without ast_percent,0.29870484440761785
+K-means,4,Without ast_percent,0.29870484440761785
+K-means,5,Without ast_percent,0.29870484440761785
+K-means,6,Without ast_percent,0.29870484440761785
+K-means,7,Without ast_percent,0.29870484440761785
+K-means,8,Without ast_percent,0.29870484440761785
+K-means,9,Without ast_percent,0.29870484440761785
+K-means,0,Without trb_percent,0.24725348665529379
+K-means,1,Without trb_percent,0.24725348665529379
+K-means,2,Without trb_percent,0.24725348665529379
+K-means,3,Without trb_percent,0.24725348665529379
+K-means,4,Without trb_percent,0.2464398282936598
+K-means,5,Without trb_percent,0.24725348665529379
+K-means,6,Without trb_percent,0.24725348665529379
+K-means,7,Without trb_percent,0.24725348665529379
+K-means,8,Without trb_percent,0.24725348665529379
+K-means,9,Without trb_percent,0.24594115165538186
+GMM,0,All features,0.200323725678825
+GMM,0,Added noise,0.1807755669960809
+GMM,1,All features,0.19863105959586974
+GMM,1,Added noise,0.18234097814356545
+GMM,2,All features,0.200323725678825
+GMM,2,Added noise,0.18234097814356545
+GMM,3,All features,0.2004912569305618
+GMM,3,Added noise,0.18234097814356545
+GMM,4,All features,0.300544224921158
+GMM,4,Added noise,0.29052065098684954
+GMM,5,All features,0.19962336171362766
+GMM,5,Added noise,0.18234097814356545
+GMM,6,All features,0.200323725678825
+GMM,6,Added noise,0.1807755669960809
+GMM,7,All features,0.2004912569305618
+GMM,7,Added noise,0.18234097814356545
+GMM,8,All features,0.19863105959586974
+GMM,8,Added noise,0.18234097814356545
+GMM,9,All features,0.19863105959586974
+GMM,9,Added noise,0.18234097814356545
+GMM,0,Without usg_percent,0.300544224921158
+GMM,1,Without usg_percent,0.300544224921158
+GMM,2,Without usg_percent,0.300544224921158
+GMM,3,Without usg_percent,0.300544224921158
+GMM,4,Without usg_percent,0.300544224921158
+GMM,5,Without usg_percent,0.300544224921158
+GMM,6,Without usg_percent,0.300544224921158
+GMM,7,Without usg_percent,0.300544224921158
+GMM,8,Without usg_percent,0.300544224921158
+GMM,9,Without usg_percent,0.300544224921158
+GMM,0,Without ts_percent,0.2020138746066313
+GMM,1,Without ts_percent,0.2020138746066313
+GMM,2,Without ts_percent,0.2020138746066313
+GMM,3,Without ts_percent,0.2020138746066313
+GMM,4,Without ts_percent,0.2020138746066313
+GMM,5,Without ts_percent,0.2020138746066313
+GMM,6,Without ts_percent,0.2020138746066313
+GMM,7,Without ts_percent,0.2020138746066313
+GMM,8,Without ts_percent,0.2020138746066313
+GMM,9,Without ts_percent,0.2020138746066313
+GMM,0,Without x3p_ar,0.19484070103301462
+GMM,1,Without x3p_ar,0.19484070103301462
+GMM,2,Without x3p_ar,0.19484070103301462
+GMM,3,Without x3p_ar,0.19484070103301462
+GMM,4,Without x3p_ar,0.19484070103301462
+GMM,5,Without x3p_ar,0.19484070103301462
+GMM,6,Without x3p_ar,0.19484070103301462
+GMM,7,Without x3p_ar,0.19484070103301462
+GMM,8,Without x3p_ar,0.19484070103301462
+GMM,9,Without x3p_ar,0.19484070103301462
+GMM,0,Without ast_percent,0.3013263965752179
+GMM,1,Without ast_percent,0.3013263965752179
+GMM,2,Without ast_percent,0.3013263965752179
+GMM,3,Without ast_percent,0.3013263965752179
+GMM,4,Without ast_percent,0.3013263965752179
+GMM,5,Without ast_percent,0.3013263965752179
+GMM,6,Without ast_percent,0.3013263965752179
+GMM,7,Without ast_percent,0.3013263965752179
+GMM,8,Without ast_percent,0.3013263965752179
+GMM,9,Without ast_percent,0.3013263965752179
+GMM,0,Without trb_percent,0.19658185840018652
+GMM,1,Without trb_percent,0.19658185840018652
+GMM,2,Without trb_percent,0.19658185840018652
+GMM,3,Without trb_percent,0.19658185840018652
+GMM,4,Without trb_percent,0.19658185840018652
+GMM,5,Without trb_percent,0.19658185840018652
+GMM,6,Without trb_percent,0.19658185840018652
+GMM,7,Without trb_percent,0.19658185840018652
+GMM,8,Without trb_percent,0.19658185840018652
+GMM,9,Without trb_percent,0.19658185840018652
+GMM,0,tied,0.32183491661077734
+GMM,1,tied,0.32183491661077734
+GMM,2,tied,0.32183491661077734
+GMM,3,tied,0.32183491661077734
+GMM,4,tied,0.32183491661077734
+GMM,5,tied,0.32183491661077734
+GMM,6,tied,0.32183491661077734
+GMM,7,tied,0.32183491661077734
+GMM,8,tied,0.32183491661077734
+GMM,9,tied,0.32183491661077734
+GMM,0,diag,0.31144628607776786
+GMM,1,diag,0.31144628607776786
+GMM,2,diag,0.31144628607776786
+GMM,3,diag,0.31144628607776786
+GMM,4,diag,0.31144628607776786
+GMM,5,diag,0.31144628607776786
+GMM,6,diag,0.31144628607776786
+GMM,7,diag,0.31144628607776786
+GMM,8,diag,0.31144628607776786
+GMM,9,diag,0.31144628607776786
+GMM,0,spherical,0.32803009927860693
+GMM,1,spherical,0.32803009927860693
+GMM,2,spherical,0.32803009927860693
+GMM,3,spherical,0.32803009927860693
+GMM,4,spherical,0.32803009927860693
+GMM,5,spherical,0.32803009927860693
+GMM,6,spherical,0.32803009927860693
+GMM,7,spherical,0.32803009927860693
+GMM,8,spherical,0.32803009927860693
+GMM,9,spherical,0.32803009927860693
